@@ -19,6 +19,7 @@
     "storybook": "start-storybook -p 6006 -c stories",
     "storybook:build": "build-storybook -c stories",
     "storybook:serve": "serve ./storybook-static -p 6006",
+    "storybook:install": "cd stories && npm install",
     "precommit": "lint-staged"
   },
   "repository": {
