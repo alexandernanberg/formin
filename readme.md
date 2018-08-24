@@ -2,6 +2,10 @@
 
 > Primitive for building forms in react
 
+[![npm](https://badgen.net/npm/v/formin)](https://www.npmjs.com/package/formin)
+[![npm](https://badgen.net/npm/license/formin)](https://www.npmjs.com/package/formin)
+[![npm](https://badgen.net/npm/dm/formin)](https://www.npmjs.com/package/formin)
+
 ## Install
 
 ```
