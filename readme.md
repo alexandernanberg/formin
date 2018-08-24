@@ -3,7 +3,7 @@
 > Primitive for building forms in react
 
 [![npm version](https://badgen.net/npm/v/formin)](https://www.npmjs.com/package/formin)
-[![build status](https://badgen.net/travis/alexandernanberg/formin)](https://travis-ci.com/alexandernanberg/formin)
+[![build status](https://badgen.net/travis/alexandernanberg/formin)](https://travis-ci.org/alexandernanberg/formin)
 [![license](https://badgen.net/npm/license/formin)](https://www.npmjs.com/package/formin)
 [![downloads](https://badgen.net/npm/dm/formin)](https://www.npmjs.com/package/formin)
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
