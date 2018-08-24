@@ -158,21 +158,21 @@ export default class Formin extends React.Component {
       name,
       value: field.value,
       'aria-invalid': !!field.error,
-      onKeyPress: composeEventHandlers(onKeyPress, (event) => {
-        /* istanbul ignore next (can't reasonably test this) */
-        const { target, key } = event
+      onKeyPress: composeEventHandlers(
+        onKeyPress,
+        /* istanbul ignore next (can't reasonably test this) */ (event) => {
+          const { target, key } = event
 
-        // Only allow numbers in type="number" inputs. This is necessary
-        // because Firefox allows other values and this causes the
-        // input to become an uncontrolled component.
-        /* istanbul ignore next (can't reasonably test this) */
-        if (target.type === 'number' && !/^[0-9]*$/.test(key)) {
-          event.preventDefault()
-        }
-      }),
+          // Only allow numbers in type="number" inputs. This is necessary
+          // because Firefox allows other values and this causes the
+          // input to become an uncontrolled component.
+          if (target.type === 'number' && !/^[0-9]*$/.test(key)) {
+            event.preventDefault()
+          }
+        },
+      ),
       onChange: composeEventHandlers(onChange, (event) => {
         const { target } = event
-        /* istanbul ignore next (can't reasonably test this) */
         const value = target.type === 'checkbox' ? target.checked : target.value
 
         this.internalSetState(({ values, errors }) => {
