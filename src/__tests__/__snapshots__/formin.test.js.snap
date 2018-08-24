@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic snapshot 1`] = `
+<form>
+  <input
+    aria-invalid="false"
+    data-testid="input"
+    name="name"
+    value=""
+  />
+  <select
+    aria-invalid="false"
+    data-testid="select"
+    name="pet"
+  >
+    <option
+      value="dog"
+    >
+      Dog
+    </option>
+    <option
+      value="cat"
+    >
+      Cat
+    </option>
+  </select>
+  <button
+    data-testid="button"
+    type="submit"
+  />
+</form>
+`;
