@@ -5,6 +5,7 @@
 [![npm](https://badgen.net/npm/v/formin)](https://www.npmjs.com/package/formin)
 [![npm](https://badgen.net/npm/license/formin)](https://www.npmjs.com/package/formin)
 [![npm](https://badgen.net/npm/dm/formin)](https://www.npmjs.com/package/formin)
+[![npm](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
 
 ## Install
 
