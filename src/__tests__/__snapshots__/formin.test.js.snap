@@ -1,11 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic snapshot 1`] = `
-<form>
+<form
+  data-testid="form"
+>
   <input
     aria-invalid="false"
     data-testid="input"
     name="name"
+    required=""
+    value=""
+  />
+  <input
+    aria-invalid="false"
+    data-testid="number"
+    name="age"
+    type="number"
     value=""
   />
   <select
@@ -24,6 +34,13 @@ exports[`basic snapshot 1`] = `
       Cat
     </option>
   </select>
+  <input
+    aria-invalid="false"
+    data-testid="checkbox"
+    name="toys"
+    type="checkbox"
+    value=""
+  />
   <button
     data-testid="button"
     type="submit"
