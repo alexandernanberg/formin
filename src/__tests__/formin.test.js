@@ -161,6 +161,41 @@ test('calls setInternalState callback', () => {
   expect(callback).toHaveBeenCalled()
 })
 
+test('stateReducer is called', () => {
+  const onStateChange = jest.fn()
+  const { input } = setup({
+    onStateChange,
+    stateReducer: (state, stateToSet) => ({
+      ...stateToSet,
+      values: { ...stateToSet.values, name: 'Foo' },
+    }),
+  })
+
+  fireEvent.change(input, { target: { value: 'Charlie' } })
+
+  expect(onStateChange).toHaveBeenCalledWith({
+    type: '__change__',
+    values: { name: 'Foo' },
+  })
+})
+
+test('getInputProps checkbox sets value', () => {
+  const onStateChange = jest.fn()
+  const { checkbox } = setup({
+    onStateChange,
+  })
+
+  fireEvent.click(checkbox)
+
+  expect(onStateChange).toHaveBeenCalledWith(
+    expect.objectContaining({
+      values: {
+        toys: true,
+      },
+    }),
+  )
+})
+
 test('throws if name is not provided to getInputProps', () => {
   expect(() =>
     setup({
