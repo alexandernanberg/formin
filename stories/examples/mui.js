@@ -78,10 +78,11 @@ export default function Mui() {
             action=""
             method="get"
             {...getFormProps({
-              onSubmit: (event, stateAndHelpers) => {
+              onSubmit: ({ setStatus, values }) => {
+                console.log(values)
                 // fake a network request
                 setTimeout(() => {
-                  stateAndHelpers.setStatus(Form.stateStatusTypes.success)
+                  setStatus(Form.stateStatusTypes.success)
                 }, 2000)
               },
             })}
