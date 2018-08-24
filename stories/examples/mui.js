@@ -28,9 +28,11 @@ class MuiForm extends React.Component {
         },
       })
 
-      if (formStateAndHelpers.errors[props.name]) {
+      const error = formStateAndHelpers.errors[props.name]
+
+      if (error) {
         inputProps.error = true
-        inputProps.helperText = formStateAndHelpers.errors[props.name]
+        inputProps.helperText = error
       }
 
       return inputProps
