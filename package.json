@@ -1,6 +1,6 @@
 {
   "name": "formin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Primitive for building forms in React.",
   "license": "MIT",
   "author": "Alexander Nanberg  <alex.nanberg@hotmail.com> (https://alexandernanberg.com)",
