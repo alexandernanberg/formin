@@ -227,7 +227,7 @@ export default class Formin extends React.Component {
     }
   }
 
-  getFormProps = ({ onSubmit = noop } = {}) => {
+  getFormProps = ({ onSubmit } = {}) => {
     const stateAndHelpers = this.getStateAndHelpers()
 
     return {
