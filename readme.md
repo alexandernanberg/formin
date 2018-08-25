@@ -26,15 +26,9 @@ import Formin from 'formin'
 
 function MyForm() {
   return (
-    <Formin>
+    <Formin onSubmit={({ values }) => { console.log(values) }}>
       {({ getFormProps, getInputProps }) => (
-        <form 
-          {...getFormProps({ 
-            onSubmit: (event, values) => { 
-              console.log(values)  
-            } 
-          })}
-        >
+        <form {...getFormProps()}>
           <input {...getInputProps({ name: 'email', type: 'email' })} />
           <input {...getInputProps({ name: 'password', type: 'password' })} />
           <button>Submit</button>

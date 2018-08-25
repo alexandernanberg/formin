@@ -15,6 +15,7 @@ function defaultStateReducer(state, stateToSet) {
 export default class Formin extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
+    onSubmit: PropTypes.func,
     onStateChange: PropTypes.func,
     stateReducer: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.func]).isRequired,
@@ -26,6 +27,7 @@ export default class Formin extends React.Component {
 
   static defaultProps = {
     onChange: noop,
+    onSubmit: noop,
     onStateChange: noop,
     stateReducer: defaultStateReducer,
   }
@@ -229,11 +231,11 @@ export default class Formin extends React.Component {
     const stateAndHelpers = this.getStateAndHelpers()
 
     return {
-      onSubmit: (event) => {
+      onSubmit: composeEventHandlers(onSubmit, (event) => {
         event.preventDefault()
         this.setStatus(Formin.stateStatusTypes.loading)
-        onSubmit(stateAndHelpers, event)
-      },
+        this.props.onSubmit(stateAndHelpers, event)
+      }),
     }
   }
 

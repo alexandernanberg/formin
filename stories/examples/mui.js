@@ -54,7 +54,15 @@ class MuiForm extends React.Component {
 
 export default function Mui() {
   return (
-    <MuiForm>
+    <MuiForm
+      onSubmit={({ setStatus, values }) => {
+        console.log(values)
+        // fake a network request
+        setTimeout(() => {
+          setStatus(Form.stateStatusTypes.success)
+        }, 2000)
+      }}
+    >
       {({ getFormProps, getInputProps, status }) => {
         if (status === Form.stateStatusTypes.success) {
           return (
@@ -77,15 +85,7 @@ export default function Mui() {
           <form
             action=""
             method="get"
-            {...getFormProps({
-              onSubmit: ({ setStatus, values }) => {
-                console.log(values)
-                // fake a network request
-                setTimeout(() => {
-                  setStatus(Form.stateStatusTypes.success)
-                }, 2000)
-              },
-            })}
+            {...getFormProps()}
             style={{
               display: 'flex',
               flexDirection: 'column',

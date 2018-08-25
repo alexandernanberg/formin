@@ -98,12 +98,10 @@ test('onFocus sets touched', () => {
   )
 })
 
-test('getFormProps onSubmit is called', () => {
+test('onSubmit called with stateAndHelpers', () => {
   const onSubmit = jest.fn(({ values }) => values)
   const { renderArg, form } = setup({
-    formProps: {
-      onSubmit,
-    },
+    onSubmit,
   })
 
   fireEvent.submit(form)

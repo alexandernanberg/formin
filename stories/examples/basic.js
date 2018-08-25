@@ -11,14 +11,7 @@ export default function Basic() {
       }}
     >
       {({ getFormProps, getInputProps, status }) => (
-        <form
-          method="get"
-          {...getFormProps({
-            onChange: (event, stateAndHelpers) => {
-              console.log(event, stateAndHelpers)
-            },
-          })}
-        >
+        <form {...getFormProps()}>
           <div>
             <label htmlFor="name">Name</label>
             <input
