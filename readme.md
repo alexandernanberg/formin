@@ -8,11 +8,16 @@
 [![downloads](https://badgen.net/npm/dm/formin)](https://www.npmjs.com/package/formin)
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
 
+## Inspiration
+This library wouldn't exist if it weren't for [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik), so big shoutout to them. 
+
 ## Install
 
 ```
 $ npm install formin
 ```
+
+You can also [try it out in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp) before commiting to anything.
 
 ## Usage
 ```js
@@ -39,6 +44,20 @@ function MyForm() {
   )
 }
 ```
+
+### Props
+
+#### `children`
+
+#### `values`
+
+#### `defaultValues`
+
+#### `onChange`
+
+#### `onStateChange`
+
+#### `stateReducer`
 
 ## License
 
