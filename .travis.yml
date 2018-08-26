@@ -12,7 +12,7 @@ before_script:
   - npm install
   - cd ..
 script:
-  - kcd-scripts validate lint,test:cover
+  - kcd-scripts validate lint,build,test:cover
 after_success: kcd-scripts travis-after-success
 branches:
   only: master
