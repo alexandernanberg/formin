@@ -1,6 +1,6 @@
 {
   "name": "formin",
-  "version": "0.2.1",
+  "version": "0.0.0-semantically-released",
   "description": "Primitive for building forms in React.",
   "license": "MIT",
   "author": "Alexander Nanberg  <alex.nanberg@hotmail.com> (https://alexandernanberg.com)",
@@ -15,11 +15,12 @@
     "test": "kcd-scripts test",
     "test:cover": "kcd-scripts test --coverage",
     "build": "kcd-scripts build --bundle",
-    "validate": "kcd-scripts validate lint,test:cover",
     "storybook": "start-storybook -p 6006 -c stories",
     "storybook:build": "build-storybook -c stories",
     "storybook:serve": "serve ./storybook-static -p 6006",
     "storybook:install": "cd stories && npm install",
+    "validate": "kcd-scripts validate lint,build,test:cover",
+    "setup": "yarn && yarn storybook:install && yarn validate",
     "precommit": "lint-staged"
   },
   "repository": {
