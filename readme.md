@@ -28,7 +28,11 @@ import Formin from 'formin'
 
 function MyForm() {
   return (
-    <Formin onSubmit={({ values }) => { console.log(values) }}>
+    <Formin 
+      onSubmit={({ values }) => { 
+        console.log(values) 
+      }}
+    >
       {({ getFormProps, getInputProps }) => (
         <form {...getFormProps()}>
           <input {...getInputProps({ name: 'email', type: 'email' })} />
@@ -50,6 +54,8 @@ function MyForm() {
 #### `defaultValues`
 
 #### `onChange`
+
+#### `onSubmit`
 
 #### `onStateChange`
 
