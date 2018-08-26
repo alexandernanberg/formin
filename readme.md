@@ -7,6 +7,7 @@
 [![license](https://badgen.net/npm/license/formin)](https://www.npmjs.com/package/formin)
 [![downloads](https://badgen.net/npm/dm/formin)](https://www.npmjs.com/package/formin)
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
+[![semantic-release](https://badgen.net/badge/%F0%9F%93%A6%F0%9F%9A%80/semantic%20release/e10079)](https://github.com/semantic-release/semantic-release)
 
 ## Inspiration
 This library wouldn't exist if it weren't for [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik), so big shoutout to them. 
