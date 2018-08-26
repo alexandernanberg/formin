@@ -4,9 +4,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import Form from '../../src'
+import Formin from '../../src'
 
 class MuiForm extends React.Component {
   getStateAndHelpers = formStateAndHelpers => ({
@@ -43,11 +41,11 @@ class MuiForm extends React.Component {
     const { children, ...props } = this.props
 
     return (
-      <Form {...props}>
+      <Formin {...props}>
         {formStateAndHelpers =>
           children(this.getStateAndHelpers(formStateAndHelpers))
         }
-      </Form>
+      </Formin>
     )
   }
 }
@@ -55,69 +53,48 @@ class MuiForm extends React.Component {
 export default function Mui() {
   return (
     <MuiForm
-      onSubmit={({ setStatus, values }) => {
+      onSubmit={({ values, setSubmitting }) => {
         console.log(values)
         // fake a network request
         setTimeout(() => {
-          setStatus(Form.stateStatusTypes.success)
+          setSubmitting(false)
         }, 2000)
       }}
     >
-      {({ getFormProps, getInputProps, status }) => {
-        if (status === Form.stateStatusTypes.success) {
-          return (
-            <Paper
-              style={{
-                padding: '24px 32px',
-                maxWidth: '320px',
-                margin: '0 auto',
-              }}
-            >
-              <Typography variant="headline" component="h3">
-                Form submitted
-              </Typography>
-              <Typography component="p">Lorem ipsum dolor sit amet</Typography>
-            </Paper>
-          )
-        }
-
-        return (
-          <form
-            action=""
-            method="get"
-            {...getFormProps()}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              maxWidth: '320px',
-              margin: '0 auto',
-            }}
-          >
-            <TextField
-              id="name"
-              label="Name"
-              margin="normal"
-              required
-              {...getInputProps({ name: 'name' })}
-            />
-            <TextField
-              id="address"
-              label="Address"
-              margin="normal"
-              {...getInputProps({ name: 'address' })}
-            />
-            <div style={{ marginTop: '24px' }}>
-              {status === Form.stateStatusTypes.loading ? (
-                <CircularProgress size={32} />
-              ) : (
-                <Button type="submit" variant="contained" color="primary">
-                  Submit
-                </Button>
-              )}
-            </div>
-          </form>
-        )
-      }}
+      {({ getFormProps, getInputProps, isSubmitting }) => (
+        <form
+          {...getFormProps()}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '320px',
+            margin: '0 auto',
+          }}
+        >
+          <TextField
+            id="name"
+            label="Name"
+            margin="normal"
+            required
+            {...getInputProps({ name: 'name' })}
+          />
+          <TextField
+            id="address"
+            label="Address"
+            margin="normal"
+            {...getInputProps({ name: 'address' })}
+          />
+          <div style={{ marginTop: '24px' }}>
+            {isSubmitting ? (
+              <CircularProgress size={32} />
+            ) : (
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            )}
+          </div>
+        </form>
+      )}
     </MuiForm>
   )
 }

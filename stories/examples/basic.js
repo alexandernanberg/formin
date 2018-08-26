@@ -10,7 +10,7 @@ export default function Basic() {
         console.log(changes)
       }}
     >
-      {({ getFormProps, getInputProps, status }) => (
+      {({ getFormProps, getInputProps, isSubmitting }) => (
         <form {...getFormProps()}>
           <div>
             <label htmlFor="name">Name</label>
@@ -31,7 +31,7 @@ export default function Basic() {
           </div>
           <div>
             <button type="submit">Submit</button>
-            {status === Form.stateStatusTypes.loading && <p>Loading...</p>}
+            {isSubmitting && <p>Loading...</p>}
           </div>
         </form>
       )}

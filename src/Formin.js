@@ -38,19 +38,12 @@ export default class Formin extends React.Component {
     onInvalid: '__invalid__',
   }
 
-  static stateStatusTypes = {
-    success: '__success__',
-    error: '__error__',
-    loading: '__loading__',
-    default: '__default__',
-  }
-
   state = {
     /* eslint-disable react/no-unused-state */
     values: this.props.defaultValues || {},
     errors: {},
     touched: {},
-    status: Formin.stateStatusTypes.default,
+    isSubmitting: false,
     /* eslint-enable react/no-unused-state */
   }
 
@@ -120,21 +113,21 @@ export default class Formin extends React.Component {
   }
 
   getStateAndHelpers() {
-    const { values, errors, status } = this.getState()
+    const { values, errors, isSubmitting } = this.getState()
 
     return {
       values,
       errors,
-      status,
+      isSubmitting,
       getFormProps: this.getFormProps,
       getInputProps: this.getInputProps,
-      setStatus: this.setStatus,
+      setSubmitting: this.setSubmitting,
       setState: this.internalSetState,
     }
   }
 
-  setStatus = (status) => {
-    this.internalSetState({ status })
+  setSubmitting = (bool) => {
+    this.internalSetState({ isSubmitting: bool })
   }
 
   getField = (name) => {
@@ -233,7 +226,7 @@ export default class Formin extends React.Component {
     return {
       onSubmit: composeEventHandlers(onSubmit, (event) => {
         event.preventDefault()
-        this.setStatus(Formin.stateStatusTypes.loading)
+        this.setSubmitting(true)
         this.props.onSubmit(stateAndHelpers, event)
       }),
     }
