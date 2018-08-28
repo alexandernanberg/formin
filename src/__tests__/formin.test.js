@@ -194,6 +194,21 @@ test('getInputProps checkbox sets value', () => {
   )
 })
 
+test('setStatus will update state', () => {
+  const onStateChange = jest.fn()
+  const { renderArg } = setup({
+    onStateChange,
+  })
+
+  renderArg.setStatus('foo')
+
+  expect(onStateChange).toHaveBeenCalledWith(
+    expect.objectContaining({
+      status: 'foo',
+    }),
+  )
+})
+
 test('throws if name is not provided to getInputProps', () => {
   expect(() =>
     setup({
