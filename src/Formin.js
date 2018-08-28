@@ -43,6 +43,7 @@ export default class Formin extends React.Component {
     values: this.props.defaultValues || {},
     errors: {},
     touched: {},
+    status: undefined,
     isSubmitting: false,
     /* eslint-enable react/no-unused-state */
   }
@@ -113,17 +114,23 @@ export default class Formin extends React.Component {
   }
 
   getStateAndHelpers() {
-    const { values, errors, isSubmitting } = this.getState()
+    const { values, errors, status, isSubmitting } = this.getState()
 
     return {
       values,
       errors,
+      status,
       isSubmitting,
       getFormProps: this.getFormProps,
       getInputProps: this.getInputProps,
       setSubmitting: this.setSubmitting,
       setState: this.internalSetState,
+      setStatus: this.setStatus,
     }
+  }
+
+  setStatus = (status) => {
+    this.internalSetState({ status })
   }
 
   setSubmitting = (bool) => {
