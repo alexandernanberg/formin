@@ -209,6 +209,36 @@ test('setStatus will update state', () => {
   )
 })
 
+test('setValues will update state', () => {
+  const onStateChange = jest.fn()
+  const { renderArg } = setup({
+    onStateChange,
+  })
+
+  renderArg.setValues({ foo: 'bar' })
+
+  expect(onStateChange).toHaveBeenCalledWith(
+    expect.objectContaining({
+      values: { foo: 'bar' },
+    }),
+  )
+})
+
+test('setErrors will update state', () => {
+  const onStateChange = jest.fn()
+  const { renderArg } = setup({
+    onStateChange,
+  })
+
+  renderArg.setErrors({ foo: 'bar' })
+
+  expect(onStateChange).toHaveBeenCalledWith(
+    expect.objectContaining({
+      errors: { foo: 'bar' },
+    }),
+  )
+})
+
 test('throws if name is not provided to getInputProps', () => {
   expect(() =>
     setup({

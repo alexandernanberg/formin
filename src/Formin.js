@@ -126,15 +126,25 @@ export default class Formin extends React.Component {
       setSubmitting: this.setSubmitting,
       setState: this.internalSetState,
       setStatus: this.setStatus,
+      setValues: this.setValues,
+      setErrors: this.setErrors,
     }
+  }
+
+  setValues = (values) => {
+    this.internalSetState({ values })
+  }
+
+  setErrors = (errors) => {
+    this.internalSetState({ errors })
   }
 
   setStatus = (status) => {
     this.internalSetState({ status })
   }
 
-  setSubmitting = (bool) => {
-    this.internalSetState({ isSubmitting: bool })
+  setSubmitting = (isSubmitting) => {
+    this.internalSetState({ isSubmitting })
   }
 
   getField = (name) => {
