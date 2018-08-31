@@ -1,0 +1,29 @@
+---
+name: Formin
+route: /
+---
+
+import { Playground, PropsTable } from 'docz'
+import Formin from '../src'
+
+# Formin
+
+<PropsTable of={Formin} />
+
+## Basic usage
+
+<Playground>
+  <Formin
+    onSubmit={({ values }) => {
+      console.log(values)
+    }}
+  >
+    {({ getFormProps, getInputProps }) => (
+      <form {...getFormProps()}>
+        <input {...getInputProps({ name: 'email', type: 'email' })} />
+        <input {...getInputProps({ name: 'password', type: 'password' })} />
+        <button>Submit</button>
+      </form>
+    )}
+  </Formin>
+</Playground>

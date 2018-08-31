@@ -7,7 +7,7 @@ package-lock.json
 
 # Build
 dist
-storybook-static
+.docz
 
 # Misc
 .vscode

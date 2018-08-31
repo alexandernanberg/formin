@@ -15,12 +15,11 @@
     "test": "kcd-scripts test",
     "test:cover": "kcd-scripts test --coverage",
     "build": "kcd-scripts build --bundle",
-    "storybook": "start-storybook -p 6006 -c stories",
-    "storybook:build": "build-storybook -c stories",
-    "storybook:serve": "serve ./storybook-static -p 6006",
-    "storybook:install": "cd stories && npm install",
+    "docz": "docz dev",
+    "docz:build": "docz build",
+    "docz:serve": "serve .docz/dist -p 6006",
     "validate": "kcd-scripts validate lint,build,test:cover",
-    "setup": "yarn && yarn storybook:install && yarn validate",
+    "setup": "yarn && yarn validate",
     "precommit": "lint-staged"
   },
   "repository": {
@@ -43,7 +42,7 @@
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
-    "@storybook/react": "^3.4.10",
+    "docz": "^0.10.3",
     "eslint": "^5.4.0",
     "eslint-config-alexandernanberg": "^1.4.0",
     "husky": "^0.14.3",
