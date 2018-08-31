@@ -18,7 +18,7 @@ export default class Formin extends React.Component {
     onSubmit: PropTypes.func,
     onStateChange: PropTypes.func,
     stateReducer: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.func]).isRequired,
+    children: PropTypes.func.isRequired,
     /* eslint-disable react/require-default-props */
     defaultValues: PropTypes.shape({}),
     values: PropTypes.shape({}),
