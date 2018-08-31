@@ -42,7 +42,6 @@
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
-    "docz": "^0.10.3",
     "eslint": "^5.4.0",
     "eslint-config-alexandernanberg": "^1.4.0",
     "husky": "^0.14.3",
