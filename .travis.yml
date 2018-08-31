@@ -6,11 +6,7 @@ cache:
 notifications:
   email: false
 node_js: '8'
-install: npm install
-before_script:
-  - cd stories
-  - npm install
-  - cd ..
+install: yarn
 script:
   - kcd-scripts validate lint,build,test:cover
 after_success: kcd-scripts travis-after-success
