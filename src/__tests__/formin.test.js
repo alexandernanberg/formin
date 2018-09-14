@@ -1,5 +1,5 @@
 import 'react-testing-library/cleanup-after-each'
-import React from 'react'
+import React, { StrictMode } from 'react'
 import { render, fireEvent } from 'react-testing-library'
 import Formin from '..'
 
@@ -245,6 +245,24 @@ test('throws if name is not provided to getInputProps', () => {
       renderFn: ({ getInputProps }) => <input {...getInputProps()} />,
     }),
   ).toThrow()
+})
+
+test('should work in StrictMode without warnings', () => {
+  const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+  render(
+    <StrictMode>
+      <Formin>
+        {({ getFormProps, getInputProps }) => (
+          <form {...getFormProps()}>
+            <input type="text" {...getInputProps({ name: 'input' })} />
+          </form>
+        )}
+      </Formin>
+    </StrictMode>,
+  )
+
+  expect(spy).not.toHaveBeenCalled()
 })
 
 // TODO: Check focused element on error (should be first invalid)
