@@ -11,7 +11,8 @@
 [![semantic-release](https://badgen.net/badge/%F0%9F%93%A6%F0%9F%9A%80/semantic%20release/e10079)](https://github.com/semantic-release/semantic-release)
 
 ## Inspiration
-This library wouldn't exist if it weren't for [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik), so big shoutout to them. 
+
+This library wouldn't exist if it weren't for [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik), so big shout-out to them both.
 
 ## Install
 
@@ -22,15 +23,15 @@ $ npm install formin
 You can also [try it out in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp) before commiting to anything.
 
 ## Usage
+
 ```js
-// basic usage
 import Formin from 'formin'
 
 function MyForm() {
   return (
-    <Formin 
-      onSubmit={({ values }) => { 
-        console.log(values) 
+    <Formin
+      onSubmit={({ values }) => {
+        console.log(values)
       }}
     >
       {({ getFormProps, getInputProps }) => (
@@ -45,21 +46,7 @@ function MyForm() {
 }
 ```
 
-### Props
-
-#### `children`
-
-#### `values`
-
-#### `defaultValues`
-
-#### `onChange`
-
-#### `onSubmit`
-
-#### `onStateChange`
-
-#### `stateReducer`
+## [Documentation](https://formin.netlify.com/)
 
 ## License
 
