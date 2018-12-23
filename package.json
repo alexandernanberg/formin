@@ -54,12 +54,13 @@
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
-    "docz": "^0.12.0",
+    "docz": "^0.13.0",
+    "docz-theme-default": "^0.13.5",
     "eslint": "^5.4.0",
     "eslint-config-alexandernanberg": "^1.4.0",
     "husky": "^1.0.0",
     "jest": "^23.5.0",
-    "kcd-scripts": "^0.45.0",
+    "kcd-scripts": "^0.49.0",
     "lint-staged": "^8.0.0",
     "prettier": "^1.14.2",
     "react": "^16.4.2",
