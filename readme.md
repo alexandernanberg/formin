@@ -10,9 +10,16 @@
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
 [![semantic-release](https://badgen.net/badge/%F0%9F%93%A6%F0%9F%9A%80/semantic%20release/e10079)](https://github.com/semantic-release/semantic-release)
 
+I built formin to serve as a tiny (~2kb) alternative to other form solutions in react with these goals in mind;
+
+- Be as declarative as possible
+- Work great with native HTML form validation
+- Tiny footprint
+- Extendable
+
 ## Inspiration
 
-This library wouldn't exist if it weren't for [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik), so big shout-out to them both.
+This library is heavily inspired by [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik) and wouldn't exist without them – so big shout-out to them both.
 
 ## Install
 
@@ -20,7 +27,7 @@ This library wouldn't exist if it weren't for [Downshift](https://github.com/pay
 $ npm install formin
 ```
 
-You can also [try it out in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp) before commiting to anything.
+You can also [play with it in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp).
 
 ## Usage
 
@@ -46,7 +53,7 @@ function MyForm() {
 }
 ```
 
-## [Documentation](https://formin.netlify.com/)
+## [Docs](https://formin.netlify.com/)
 
 ## License
 
