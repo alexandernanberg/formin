@@ -1,7 +1,7 @@
-import 'react-testing-library/cleanup-after-each'
 import React, { StrictMode } from 'react'
-import { render, fireEvent } from 'react-testing-library'
-import Formin from '..'
+import { render, fireEvent, act } from 'react-testing-library'
+import 'jest-dom/extend-expect'
+import { Formin } from '..'
 
 jest.useFakeTimers()
 
@@ -11,8 +11,8 @@ function setup({ renderFn, formProps, ...props } = {}) {
       <form data-testid="form" {...getFormProps(formProps)}>
         <input
           data-testid="input"
-          {...getInputProps({ name: 'name' })}
           required
+          {...getInputProps({ name: 'name' })}
         />
         <input
           type="number"
@@ -35,7 +35,7 @@ function setup({ renderFn, formProps, ...props } = {}) {
 
   let renderArg
   const children = renderFn || defaultRenderFn
-  const childrenSpy = jest.fn((controllerArg) => {
+  const childrenSpy = jest.fn(controllerArg => {
     renderArg = controllerArg
     return children(controllerArg)
   })
@@ -59,19 +59,6 @@ test('basic snapshot', () => {
   expect(container.firstChild).toMatchSnapshot()
 })
 
-test('onStateChange called with changes', () => {
-  const handleStateChange = jest.fn()
-  const { input } = setup({
-    onStateChange: handleStateChange,
-  })
-
-  fireEvent.change(input, { target: { value: 'Charlie' } })
-
-  expect(handleStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({ values: { name: 'Charlie' } }),
-  )
-})
-
 test('onChange called with changes', () => {
   const handleOnChange = jest.fn()
   const { input } = setup({
@@ -85,7 +72,20 @@ test('onChange called with changes', () => {
   )
 })
 
-test('onFocus sets touched', () => {
+test('onSubmit called with stateAndHelpers', () => {
+  const onSubmit = jest.fn(({ values }) => values)
+  const { renderArg, form } = setup({
+    onSubmit,
+  })
+
+  const { getInputProps, getFormProps, ...args } = renderArg
+
+  fireEvent.submit(form)
+
+  expect(onSubmit.mock.calls[0][0]).toEqual(args)
+})
+
+test.skip('onFocus sets touched', () => {
   const handleStateChange = jest.fn()
   const { input } = setup({
     onStateChange: handleStateChange,
@@ -98,18 +98,7 @@ test('onFocus sets touched', () => {
   )
 })
 
-test('onSubmit called with stateAndHelpers', () => {
-  const onSubmit = jest.fn(({ values }) => values)
-  const { renderArg, form } = setup({
-    onSubmit,
-  })
-
-  fireEvent.submit(form)
-
-  expect(onSubmit.mock.calls[0][0]).toEqual(renderArg)
-})
-
-test('works when controlled', () => {
+test('can be controlled', () => {
   const onChange = jest.fn()
   const { input } = setup({ onChange, values: { name: 'Alex' } })
 
@@ -120,131 +109,52 @@ test('works when controlled', () => {
   expect(onChange).toHaveBeenCalledWith({ name: 'Charlie' })
 })
 
-test('sets error state when invalid', () => {
-  const onStateChange = jest.fn()
-  const { form } = setup({ onStateChange })
+test('can reset', () => {
+  const { input, renderArg } = setup({ defaultValues: { name: 'Alex' } })
+
+  expect(input.value).toEqual('Alex')
+
+  act(() => {
+    renderArg.reset()
+  })
+
+  expect(input.value).toEqual('')
+})
+
+test('sets error onInvalid', () => {
+  const { form, input } = setup()
 
   form.checkValidity()
-  jest.runAllTimers()
 
-  expect(onStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({ errors: { name: 'Constraints not satisfied' } }),
-  )
+  act(() => {
+    jest.runAllTimers()
+  })
+
+  expect(input).toHaveAttribute('aria-invalid')
 })
 
-test('clears error on input change', () => {
-  const onStateChange = jest.fn()
-  const { form, input } = setup({ onStateChange })
+test('clear error onChange', () => {
+  const { form, input } = setup()
 
-  form.checkValidity()
-  jest.runAllTimers()
-
-  fireEvent.change(input, { target: { value: 'Charlie' } })
-
-  expect(onStateChange).toHaveBeenLastCalledWith(
-    expect.objectContaining({
-      errors: {
-        name: false,
-      },
-    }),
-  )
-})
-
-test('calls setInternalState callback', () => {
-  const callback = jest.fn()
-  const { renderArg } = setup()
-
-  renderArg.setState({ values: { name: 'Fido' } }, callback)
-
-  expect(callback).toHaveBeenCalled()
-})
-
-test('stateReducer is called', () => {
-  const onStateChange = jest.fn()
-  const { input } = setup({
-    onStateChange,
-    stateReducer: (state, stateToSet) => ({
-      ...stateToSet,
-      values: { ...stateToSet.values, name: 'Foo' },
-    }),
+  act(() => {
+    form.checkValidity()
+    jest.runAllTimers()
   })
 
   fireEvent.change(input, { target: { value: 'Charlie' } })
 
-  expect(onStateChange).toHaveBeenCalledWith({
-    type: '__change__',
-    values: { name: 'Foo' },
-  })
+  expect(input).not.toHaveAttribute('aria-invalid')
 })
 
-test('getInputProps checkbox sets value', () => {
-  const onStateChange = jest.fn()
+test('set correct checkbox value', () => {
+  const onChange = jest.fn()
   const { checkbox } = setup({
-    onStateChange,
+    onChange,
   })
 
   fireEvent.click(checkbox)
 
-  expect(onStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({
-      values: {
-        toys: true,
-      },
-    }),
-  )
-})
-
-test('setStatus will update state', () => {
-  const onStateChange = jest.fn()
-  const { renderArg } = setup({
-    onStateChange,
-  })
-
-  renderArg.setStatus('foo')
-
-  expect(onStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({
-      status: 'foo',
-    }),
-  )
-})
-
-test('setValues will update state', () => {
-  const onStateChange = jest.fn()
-  const { renderArg } = setup({
-    onStateChange,
-  })
-
-  renderArg.setValues({ foo: 'bar' })
-
-  expect(onStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({
-      values: { foo: 'bar' },
-    }),
-  )
-})
-
-test('setErrors will update state', () => {
-  const onStateChange = jest.fn()
-  const { renderArg } = setup({
-    onStateChange,
-  })
-
-  renderArg.setErrors({ foo: 'bar' })
-
-  expect(onStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({
-      errors: { foo: 'bar' },
-    }),
-  )
-})
-
-test('throws if name is not provided to getInputProps', () => {
-  expect(() =>
-    setup({
-      renderFn: ({ getInputProps }) => <input {...getInputProps()} />,
-    }),
-  ).toThrow()
+  expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ toys: true }))
 })
 
 test('should work in StrictMode without warnings', () => {

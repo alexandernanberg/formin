@@ -3,8 +3,8 @@ name: Formin
 route: /
 ---
 
-import { Playground, PropsTable } from 'docz'
-import Formin from '../src'
+import { Playground } from 'docz'
+import { Formin } from '../src'
 
 # Formin
 
@@ -15,17 +15,18 @@ import Formin from '../src'
     onSubmit={({ values }) => {
       console.log(values)
     }}
+    onChange={values => {
+      console.log(values)
+    }}
   >
     {({ getFormProps, getInputProps }) => (
       <form {...getFormProps()}>
-        <input {...getInputProps({ name: 'email', type: 'email' })} />
-        <input {...getInputProps({ name: 'password', type: 'password' })} />
+        <input {...getInputProps({ name: 'text1', type: 'text' })} />
+        <input
+          {...getInputProps({ name: 'text2', type: 'text', required: true })}
+        />
         <button>Submit</button>
       </form>
     )}
   </Formin>
 </Playground>
-
-## Props
-
-<PropsTable of={Formin} />

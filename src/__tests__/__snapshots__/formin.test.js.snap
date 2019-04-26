@@ -5,21 +5,18 @@ exports[`basic snapshot 1`] = `
   data-testid="form"
 >
   <input
-    aria-invalid="false"
     data-testid="input"
     name="name"
     required=""
     value=""
   />
   <input
-    aria-invalid="false"
     data-testid="number"
     name="age"
     type="number"
     value=""
   />
   <select
-    aria-invalid="false"
     data-testid="select"
     name="pet"
   >
@@ -35,7 +32,6 @@ exports[`basic snapshot 1`] = `
     </option>
   </select>
   <input
-    aria-invalid="false"
     data-testid="checkbox"
     name="toys"
     type="checkbox"
