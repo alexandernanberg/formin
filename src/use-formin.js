@@ -80,8 +80,8 @@ export default function useFormin({
       }),
       onInvalid: wrapEvent(onInputInvalid, ({ target }) => {
         const { validationMessage, validity } = target
-        // Make sure to update state after the focus event has fired. This is
-        // necessary because IE11 will fire the events in another order.
+        // Make sure to update errors after the focus event has fired. IE11 will
+        // fire the events in a different order.
         setTimeout(() => {
           setError(name, { validationMessage, validity })
         })
