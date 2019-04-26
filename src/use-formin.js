@@ -48,58 +48,72 @@ export default function useFormin({
 
   /* Prop getters */
 
-  const getInputProps = ({
-    name,
-    onInvalid: onInputInvalid,
-    onChange: onInputChange,
-    ...rest
-  } = {}) => {
-    const value =
-      (areValuesControlled ? controlledValues[name] : values[name]) || ''
-    const error = errors[name]
-
-    return {
+  const getInputProps = useCallback(
+    ({
       name,
-      value,
-      'aria-invalid': error != null ? !!error : undefined,
-      onChange: wrapEvent(onInputChange, ({ target }) => {
-        const inputValue =
-          target.type === 'checkbox' ? target.checked : target.value
+      onInvalid: onInputInvalid,
+      onChange: onInputChange,
+      ...rest
+    } = {}) => {
+      const value =
+        (areValuesControlled ? controlledValues[name] : values[name]) || ''
+      const error = errors[name]
 
-        if (onChange) {
-          onChange({ [name]: inputValue })
-        }
+      return {
+        name,
+        value,
+        'aria-invalid': error != null ? !!error : undefined,
+        onChange: wrapEvent(onInputChange, ({ target }) => {
+          const inputValue =
+            target.type === 'checkbox' ? target.checked : target.value
 
-        if (!areValuesControlled) {
-          setValue(name, inputValue)
-        }
+          if (onChange) {
+            onChange({ [name]: inputValue })
+          }
 
-        if (error) {
-          setError(name, null)
-        }
-      }),
-      onInvalid: wrapEvent(onInputInvalid, ({ target }) => {
-        const { validationMessage, validity } = target
-        // Make sure to update errors after the focus event has fired. IE11 will
-        // fire the events in a different order.
-        setTimeout(() => {
-          setError(name, { validationMessage, validity })
-        })
-      }),
-      ...rest,
-    }
-  }
+          if (!areValuesControlled) {
+            setValue(name, inputValue)
+          }
 
-  const getFormProps = ({ onSubmit: onFormSubmit, ...rest } = {}) => {
-    return {
-      onSubmit: wrapEvent(onFormSubmit, event => {
-        event.preventDefault()
-        setIsSubmitting(true)
-        onSubmit(stateAndHelpers, event)
-      }),
-      ...rest,
-    }
-  }
+          if (error) {
+            setError(name, null)
+          }
+        }),
+        onInvalid: wrapEvent(onInputInvalid, ({ target }) => {
+          const { validationMessage, validity } = target
+          // Make sure to update errors after the focus event has fired. IE11 will
+          // fire the events in a different order.
+          setTimeout(() => {
+            setError(name, { validationMessage, validity })
+          })
+        }),
+        ...rest,
+      }
+    },
+    [
+      values,
+      controlledValues,
+      areValuesControlled,
+      errors,
+      onChange,
+      setValue,
+      setError,
+    ],
+  )
+
+  const getFormProps = useCallback(
+    ({ onSubmit: onFormSubmit, ...rest } = {}) => {
+      return {
+        onSubmit: wrapEvent(onFormSubmit, event => {
+          event.preventDefault()
+          setIsSubmitting(true)
+          onSubmit(stateAndHelpers, event)
+        }),
+        ...rest,
+      }
+    },
+    [onSubmit, stateAndHelpers],
+  )
 
   return {
     ...stateAndHelpers,
