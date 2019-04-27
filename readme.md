@@ -63,8 +63,8 @@ function MyForm() {
     >
       {({ getFormProps, getInputProps }) => (
         <form {...getFormProps()}>
-          <input {...getInputProps({ name: 'email', type: 'email' })} />
-          <input {...getInputProps({ name: 'password', type: 'password' })} />
+          <input {...getInputProps({ name: 'foo' })} />
+          <input {...getInputProps({ name: 'bar' })} />
           <button>Submit</button>
         </form>
       )}
