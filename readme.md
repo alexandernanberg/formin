@@ -33,7 +33,11 @@ You can also [play around with it in CodeSandbox.io](https://codesandbox.io/s/mj
 import { useFormin } from 'formin'
 
 function Form() {
-  const { getInputProps, getFormProps } = useFormin()
+  const { getInputProps, getFormProps } = useFormin({
+    onSubmit: ({ values }) => {
+      console.log(values)
+    },
+  })
 
   return (
     <form {...getFormProps()}>
