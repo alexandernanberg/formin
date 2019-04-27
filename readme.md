@@ -10,16 +10,12 @@
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
 [![semantic-release](https://badgen.net/badge/%F0%9F%93%A6%F0%9F%9A%80/semantic%20release/e10079)](https://github.com/semantic-release/semantic-release)
 
-I built formin to serve as a tiny (~2kb) alternative to other form solutions in react with these goals in mind;
+I built formin to serve as a tiny (~1kb) alternative to other form solutions in react with these goals in mind
 
-- Be as declarative as possible
+- Simple API
+- Tiny size
 - Work great with native HTML form validation
-- Tiny footprint
 - Extendable
-
-## Inspiration
-
-This library is heavily inspired by [Downshift](https://github.com/paypal/downshift) and [Formik](https://github.com/jaredpalmer/formik) and wouldn't exist without them – so big shout-out to them both.
 
 ## Install
 
@@ -27,12 +23,32 @@ This library is heavily inspired by [Downshift](https://github.com/paypal/downsh
 $ npm install formin
 ```
 
-You can also [play with it in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp).
+You can also [play around with it in CodeSandbox.io](https://codesandbox.io/s/mj1jr59nxp).
 
 ## Usage
 
+### Hook
+
 ```js
-import Formin from 'formin'
+import { useFormin } from 'formin'
+
+function Form() {
+  const { getInputProps, getFormProps } = useFormin()
+
+  return (
+    <form {...getFormProps()}>
+      <input {...getInputProps({ name: 'foo' })} />
+      <input {...getInputProps({ name: 'bar' })} />
+      <button>Submit</button>
+    </form>
+  )
+}
+```
+
+## Render prop
+
+```js
+import { Formin } from 'formin'
 
 function MyForm() {
   return (
@@ -55,6 +71,10 @@ function MyForm() {
 
 ## [Docs](https://formin.netlify.com/)
 
+## Other solutions
+
+This library is heavily inspired by [Formik](https://github.com/jaredpalmer/formik) but takes a different approach to the problem.
+
 ## License
 
-MIT
+[MIT](./license)
