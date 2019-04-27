@@ -45,7 +45,7 @@ function Form() {
 }
 ```
 
-## Render prop
+### Render prop
 
 ```js
 import { Formin } from 'formin'
