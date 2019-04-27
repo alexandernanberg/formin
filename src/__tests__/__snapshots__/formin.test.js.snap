@@ -6,35 +6,47 @@ exports[`basic snapshot 1`] = `
 >
   <input
     data-testid="input"
-    name="name"
+    name="text"
     required=""
     value=""
   />
   <input
     data-testid="number"
-    name="age"
+    name="number"
     type="number"
     value=""
   />
   <select
     data-testid="select"
-    name="pet"
+    name="select"
   >
     <option
-      value="dog"
+      value="foo"
     >
-      Dog
+      Foo
     </option>
     <option
-      value="cat"
+      value="bar"
     >
-      Cat
+      Bar
     </option>
   </select>
   <input
     data-testid="checkbox"
-    name="toys"
+    name="checkbox"
     type="checkbox"
+    value=""
+  />
+  <input
+    data-testid="range"
+    name="range"
+    type="range"
+    value=""
+  />
+  <input
+    data-testid="custom"
+    name="custom"
+    type="text"
     value=""
   />
   <button

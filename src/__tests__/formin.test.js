@@ -5,6 +5,18 @@ import { Formin } from '..'
 
 jest.useFakeTimers()
 
+function CustomInput({ onChange = () => {}, ...props }) {
+  return (
+    <input
+      type="text"
+      onChange={({ target }) => {
+        onChange(target.value)
+      }}
+      {...props}
+    />
+  )
+}
+
 function setup({ renderFn, formProps, ...props } = {}) {
   function defaultRenderFn({ getFormProps, getInputProps }) {
     return (
@@ -12,21 +24,30 @@ function setup({ renderFn, formProps, ...props } = {}) {
         <input
           data-testid="input"
           required
-          {...getInputProps({ name: 'name' })}
+          {...getInputProps({ name: 'text' })}
         />
         <input
           type="number"
           data-testid="number"
-          {...getInputProps({ name: 'age' })}
+          {...getInputProps({ name: 'number' })}
         />
-        <select data-testid="select" {...getInputProps({ name: 'pet' })}>
-          <option value="dog">Dog</option>
-          <option value="cat">Cat</option>
+        <select data-testid="select" {...getInputProps({ name: 'select' })}>
+          <option value="foo">Foo</option>
+          <option value="bar">Bar</option>
         </select>
         <input
           data-testid="checkbox"
           type="checkbox"
-          {...getInputProps({ name: 'toys' })}
+          {...getInputProps({ name: 'checkbox' })}
+        />
+        <input
+          data-testid="range"
+          type="range"
+          {...getInputProps({ name: 'range' })}
+        />
+        <CustomInput
+          data-testid="custom"
+          {...getInputProps({ name: 'custom' })}
         />
         <button type="submit" data-testid="button" />
       </form>
@@ -50,6 +71,8 @@ function setup({ renderFn, formProps, ...props } = {}) {
     input: utils.queryByTestId('input'),
     number: utils.queryByTestId('number'),
     checkbox: utils.queryByTestId('checkbox'),
+    range: utils.queryByTestId('range'),
+    custom: utils.queryByTestId('custom'),
     button: utils.queryByTestId('button'),
   }
 }
@@ -65,10 +88,10 @@ test('onChange called with changes', () => {
     onChange: handleOnChange,
   })
 
-  fireEvent.change(input, { target: { value: 'Charlie' } })
+  fireEvent.change(input, { target: { value: 'Foo' } })
 
   expect(handleOnChange).toHaveBeenCalledWith(
-    expect.objectContaining({ name: 'Charlie' }),
+    expect.objectContaining({ text: 'Foo' }),
   )
 })
 
@@ -94,31 +117,36 @@ test.skip('onFocus sets touched', () => {
   fireEvent.focus(input)
 
   expect(handleStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({ touched: { name: true } }),
+    expect.objectContaining({ touched: { text: true } }),
   )
 })
 
 test('can be controlled', () => {
   const onChange = jest.fn()
-  const { input } = setup({ onChange, values: { name: 'Alex' } })
+  const { input } = setup({ onChange, values: { text: 'Foo' } })
 
-  expect(input.value).toEqual('Alex')
+  expect(input.value).toEqual('Foo')
 
-  fireEvent.change(input, { target: { value: 'Charlie' } })
+  fireEvent.change(input, { target: { value: 'Bar' } })
 
-  expect(onChange).toHaveBeenCalledWith({ name: 'Charlie' })
+  expect(onChange).toHaveBeenCalledWith({ text: 'Bar' })
 })
 
 test('can reset', () => {
-  const { input, renderArg } = setup({ defaultValues: { name: 'Alex' } })
+  const onChange = jest.fn()
+  const { input, renderArg } = setup({
+    defaultValues: { text: 'Foo' },
+    onChange,
+  })
 
-  expect(input.value).toEqual('Alex')
+  expect(input.value).toEqual('Foo')
 
   act(() => {
     renderArg.reset()
   })
 
   expect(input.value).toEqual('')
+  expect(onChange).toHaveBeenCalledWith({})
 })
 
 test('sets error onInvalid', () => {
@@ -141,9 +169,22 @@ test('clear error onChange', () => {
     jest.runAllTimers()
   })
 
-  fireEvent.change(input, { target: { value: 'Charlie' } })
+  fireEvent.change(input, { target: { value: 'Foo' } })
 
   expect(input).not.toHaveAttribute('aria-invalid')
+})
+
+test('can handle onChange argument as value', () => {
+  const onChange = jest.fn()
+  const { custom } = setup({
+    onChange,
+  })
+
+  fireEvent.change(custom, { target: { value: 'Foo' } })
+
+  expect(onChange).toHaveBeenCalledWith(
+    expect.objectContaining({ custom: 'Foo' }),
+  )
 })
 
 test('set correct checkbox value', () => {
@@ -154,7 +195,22 @@ test('set correct checkbox value', () => {
 
   fireEvent.click(checkbox)
 
-  expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ toys: true }))
+  expect(onChange).toHaveBeenCalledWith(
+    expect.objectContaining({ checkbox: true }),
+  )
+})
+
+test('set correct number and range value', () => {
+  const onChange = jest.fn()
+  const { number, range } = setup({
+    onChange,
+  })
+
+  fireEvent.change(number, { target: { value: 1 } })
+  fireEvent.change(range, { target: { value: 5 } })
+
+  expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ number: 1 }))
+  expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ range: 5 }))
 })
 
 test('should work in StrictMode without warnings', () => {
@@ -165,7 +221,7 @@ test('should work in StrictMode without warnings', () => {
       <Formin>
         {({ getFormProps, getInputProps }) => (
           <form {...getFormProps()}>
-            <input type="text" {...getInputProps({ name: 'input' })} />
+            <input type="text" {...getInputProps({ text: 'input' })} />
           </form>
         )}
       </Formin>

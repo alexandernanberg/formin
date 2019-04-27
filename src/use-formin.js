@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState, useCallback } from 'react'
-import { wrapEvent } from './utils'
+import { wrapEvent, isInputEvent } from './utils'
 
 export default function useFormin({
   values: controlledValues,
@@ -18,7 +18,11 @@ export default function useFormin({
   const reset = useCallback(() => {
     setValues({})
     setErrors({})
-  }, [])
+
+    if (onChange) {
+      onChange({})
+    }
+  }, [onChange])
 
   const setValue = useCallback((name, value) => {
     setValues(prev => ({
@@ -63,9 +67,23 @@ export default function useFormin({
         name,
         value,
         'aria-invalid': error != null ? !!error : undefined,
-        onChange: wrapEvent(onInputChange, ({ target }) => {
-          const inputValue =
-            target.type === 'checkbox' ? target.checked : target.value
+        onChange: wrapEvent(onInputChange, eventOrValue => {
+          let inputValue
+          if (isInputEvent(eventOrValue)) {
+            const { target } = eventOrValue
+            inputValue = target.value
+
+            if (/number|range/.test(target.type)) {
+              const parsed = parseFloat(target.value)
+              inputValue = Number.isNaN(parsed) ? '' : parsed
+            }
+
+            if (/checkbox/.test(target.type)) {
+              inputValue = target.checked
+            }
+          } else {
+            inputValue = eventOrValue
+          }
 
           if (onChange) {
             onChange({ [name]: inputValue })
