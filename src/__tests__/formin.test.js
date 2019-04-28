@@ -77,12 +77,12 @@ function setup({ renderFn, formProps, ...props } = {}) {
   }
 }
 
-test('basic snapshot', () => {
+test('should match snapshot', () => {
   const { container } = setup()
   expect(container.firstChild).toMatchSnapshot()
 })
 
-test('onChange called with changes', () => {
+test('should call onChange with values', () => {
   const handleOnChange = jest.fn()
   const { input } = setup({
     onChange: handleOnChange,
@@ -95,7 +95,7 @@ test('onChange called with changes', () => {
   )
 })
 
-test('onSubmit called with stateAndHelpers', () => {
+test('should call onSubmit with stateAndHelpers', () => {
   const onSubmit = jest.fn(({ values }) => values)
   const { renderArg, form } = setup({
     onSubmit,
@@ -106,19 +106,6 @@ test('onSubmit called with stateAndHelpers', () => {
   fireEvent.submit(form)
 
   expect(onSubmit.mock.calls[0][0]).toEqual(args)
-})
-
-test.skip('onFocus sets touched', () => {
-  const handleStateChange = jest.fn()
-  const { input } = setup({
-    onStateChange: handleStateChange,
-  })
-
-  fireEvent.focus(input)
-
-  expect(handleStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({ touched: { text: true } }),
-  )
 })
 
 test('can be controlled', () => {
@@ -149,7 +136,20 @@ test('can reset', () => {
   expect(onChange).toHaveBeenCalledWith({})
 })
 
-test('sets error onInvalid', () => {
+test.skip('should set touched on field focus', () => {
+  const handleStateChange = jest.fn()
+  const { input } = setup({
+    onStateChange: handleStateChange,
+  })
+
+  fireEvent.focus(input)
+
+  expect(handleStateChange).toHaveBeenCalledWith(
+    expect.objectContaining({ touched: { text: true } }),
+  )
+})
+
+test('should set error on field invalid', () => {
   const { form, input } = setup()
 
   form.checkValidity()
@@ -161,7 +161,7 @@ test('sets error onInvalid', () => {
   expect(input).toHaveAttribute('aria-invalid')
 })
 
-test('clear error onChange', () => {
+test('should clear error on field change', () => {
   const { form, input } = setup()
 
   act(() => {
@@ -174,7 +174,7 @@ test('clear error onChange', () => {
   expect(input).not.toHaveAttribute('aria-invalid')
 })
 
-test('can handle onChange argument as value', () => {
+test('should work with onChange argument as value', () => {
   const onChange = jest.fn()
   const { custom } = setup({
     onChange,
@@ -185,9 +185,10 @@ test('can handle onChange argument as value', () => {
   expect(onChange).toHaveBeenCalledWith(
     expect.objectContaining({ custom: 'Foo' }),
   )
+  expect(custom).toHaveAttribute('value', 'Foo')
 })
 
-test('set correct checkbox value', () => {
+test('should set correct value on checkbox fields', () => {
   const onChange = jest.fn()
   const { checkbox } = setup({
     onChange,
@@ -200,7 +201,7 @@ test('set correct checkbox value', () => {
   )
 })
 
-test('set correct number and range value', () => {
+test('should set correct value on number/range fields', () => {
   const onChange = jest.fn()
   const { number, range } = setup({
     onChange,
@@ -231,4 +232,8 @@ test('should work in StrictMode without warnings', () => {
   expect(spy).not.toHaveBeenCalled()
 })
 
-// TODO: Check focused element on error (should be first invalid)
+test.todo('can handle arrays')
+
+test.todo('can handle arrays with checkboxes')
+
+test.todo('should set focus on first invalid field on submit')
