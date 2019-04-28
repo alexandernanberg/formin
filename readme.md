@@ -15,6 +15,7 @@ I built formin to serve as a tiny (~1kb) alternative to other form solutions in 
 - Simple API
 - Tiny size
 - Work great with native HTML form validation
+- Great a11y support
 - Extendable
 
 ## Install
