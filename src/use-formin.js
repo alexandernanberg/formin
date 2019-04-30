@@ -157,9 +157,14 @@ export default function useFormin({
     [onSubmit, stateAndHelpers],
   )
 
-  return {
-    ...stateAndHelpers,
-    getInputProps,
-    getFormProps,
-  }
+  const forminBag = useMemo(
+    () => ({
+      ...stateAndHelpers,
+      getInputProps,
+      getFormProps,
+    }),
+    [stateAndHelpers, getInputProps, getFormProps],
+  )
+
+  return forminBag
 }
