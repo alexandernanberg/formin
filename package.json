@@ -6,7 +6,6 @@
   "author": "Alexander Nanberg  <alex.nanberg@hotmail.com> (https://alexandernanberg.com)",
   "main": "dist/formin.cjs.js",
   "module": "dist/formin.esm.js",
-  "browser": "dist/formin.umd.js",
   "sideEffects": false,
   "files": [
     "dist"
