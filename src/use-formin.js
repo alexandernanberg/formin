@@ -9,8 +9,8 @@ export default function useFormin({
 } = {}) {
   const [values, setValues] = useState(defaultValues || {})
   const [errors, setErrors] = useState({})
+  const [touched, setTouchedState] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-
   const { current: areValuesControlled } = useRef(controlledValues != null)
 
   /* Utils */
@@ -31,10 +31,17 @@ export default function useFormin({
     }))
   }, [])
 
-  const setError = useCallback((name, value) => {
+  const setTouched = useCallback((name, fieldTocuhed) => {
+    setTouchedState(prev => ({
+      ...prev,
+      [name]: fieldTocuhed,
+    }))
+  }, [])
+
+  const setError = useCallback((name, error) => {
     setErrors(prev => ({
       ...prev,
-      [name]: value,
+      [name]: error,
     }))
   }, [])
 
@@ -42,13 +49,25 @@ export default function useFormin({
     return {
       values,
       errors,
+      touched,
       isSubmitting,
       setIsSubmitting,
       setValue,
       setError,
+      setTouched,
       reset,
     }
-  }, [values, errors, isSubmitting, setIsSubmitting, setValue, setError, reset])
+  }, [
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    setIsSubmitting,
+    setValue,
+    setError,
+    setTouched,
+    reset,
+  ])
 
   /* Prop getters */
 
@@ -57,6 +76,7 @@ export default function useFormin({
       name,
       onInvalid: onInputInvalid,
       onChange: onInputChange,
+      onBlur: onInputBlur,
       ...rest
     } = {}) => {
       const value =
@@ -97,6 +117,9 @@ export default function useFormin({
             setError(name, null)
           }
         }),
+        onBlur: wrapEvent(onInputBlur, () => {
+          setTouched(name, true)
+        }),
         onInvalid: wrapEvent(onInputInvalid, ({ target }) => {
           const { validationMessage, validity } = target
           // Make sure to update errors after the focus event has fired. IE11 will
@@ -116,6 +139,7 @@ export default function useFormin({
       onChange,
       setValue,
       setError,
+      setTouched,
     ],
   )
 

@@ -18,13 +18,14 @@ function CustomInput({ onChange = () => {}, ...props }) {
 }
 
 function setup({ renderFn, formProps, ...props } = {}) {
-  function defaultRenderFn({ getFormProps, getInputProps }) {
+  function defaultRenderFn({ getFormProps, getInputProps, touched }) {
     return (
       <form data-testid="form" {...getFormProps(formProps)}>
         <input
           data-testid="input"
           required
           {...getInputProps({ name: 'text' })}
+          data-touched={touched.text}
         />
         <input
           type="number"
@@ -136,17 +137,14 @@ test('can reset', () => {
   expect(onChange).toHaveBeenCalledWith({})
 })
 
-test.skip('should set touched on field focus', () => {
-  const handleStateChange = jest.fn()
-  const { input } = setup({
-    onStateChange: handleStateChange,
-  })
+test('should set touched on field blur', () => {
+  const { input } = setup()
 
-  fireEvent.focus(input)
+  expect(input).not.toHaveAttribute('data-touched')
 
-  expect(handleStateChange).toHaveBeenCalledWith(
-    expect.objectContaining({ touched: { text: true } }),
-  )
+  fireEvent.blur(input)
+
+  expect(input).toHaveAttribute('data-touched', 'true')
 })
 
 test('should set error on field invalid', () => {
