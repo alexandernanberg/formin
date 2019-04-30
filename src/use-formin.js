@@ -10,7 +10,7 @@ export default function useFormin({
   const [values, setValues] = useState(defaultValues || {})
   const [errors, setErrors] = useState({})
   const [touched, setTouchedState] = useState({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false)
   const { current: areValuesControlled } = useRef(controlledValues != null)
 
   /* Utils */
@@ -19,6 +19,7 @@ export default function useFormin({
     setValues({})
     setErrors({})
     setTouchedState({})
+    setSubmitting(false)
 
     if (onChange) {
       onChange({})
@@ -52,7 +53,7 @@ export default function useFormin({
       errors,
       touched,
       isSubmitting,
-      setIsSubmitting,
+      setSubmitting,
       setValue,
       setError,
       setTouched,
@@ -63,7 +64,7 @@ export default function useFormin({
     errors,
     touched,
     isSubmitting,
-    setIsSubmitting,
+    setSubmitting,
     setValue,
     setError,
     setTouched,
@@ -149,7 +150,7 @@ export default function useFormin({
       return {
         onSubmit: wrapEvent(onFormSubmit, event => {
           event.preventDefault()
-          setIsSubmitting(true)
+          setSubmitting(true)
           onSubmit(stateAndHelpers, event)
         }),
         ...rest,
