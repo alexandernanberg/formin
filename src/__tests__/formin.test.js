@@ -235,3 +235,7 @@ test.todo('can handle arrays')
 test.todo('can handle arrays with checkboxes')
 
 test.todo('should set focus on first invalid field on submit')
+
+test.todo('should wrap event')
+
+test.todo('should pass through props in prop getters')
