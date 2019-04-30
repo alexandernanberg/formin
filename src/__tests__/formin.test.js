@@ -134,6 +134,7 @@ test('can reset', () => {
   })
 
   expect(input.value).toEqual('')
+  expect(input).not.toHaveAttribute('data-touched')
   expect(onChange).toHaveBeenCalledWith({})
 })
 

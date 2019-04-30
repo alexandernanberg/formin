@@ -18,6 +18,7 @@ export default function useFormin({
   const reset = useCallback(() => {
     setValues({})
     setErrors({})
+    setTouchedState({})
 
     if (onChange) {
       onChange({})
