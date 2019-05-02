@@ -116,7 +116,7 @@ export default function useFormin({
           }
 
           if (error) {
-            setError(name, null)
+            setError(name, undefined)
           }
         }),
         onBlur: wrapEvent(onInputBlur, () => {
