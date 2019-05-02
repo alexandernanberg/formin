@@ -10,7 +10,7 @@
 [![bundle size](https://badgen.net/bundlephobia/minzip/formin)](https://bundlephobia.com/result?p=formin)
 [![semantic-release](https://badgen.net/badge/%F0%9F%93%A6%F0%9F%9A%80/semantic%20release/e10079)](https://github.com/semantic-release/semantic-release)
 
-I built formin to serve as a tiny (~1kb) alternative to other form solutions in react with these goals in mind
+I built formin to serve as a tiny (~1.5kb) alternative to other form solutions in react with these goals in mind
 
 - Simple API
 - Tiny size
