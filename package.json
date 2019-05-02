@@ -4,8 +4,9 @@
   "description": "Primitive for building forms in React.",
   "license": "MIT",
   "author": "Alexander Nanberg  <alex.nanberg@hotmail.com> (https://alexandernanberg.com)",
-  "main": "dist/formin.cjs.js",
+  "main": "dist/formin.js",
   "module": "dist/formin.esm.js",
+  "umd:main": "dist/formin.umd.js",
   "sideEffects": false,
   "files": [
     "dist"
@@ -14,7 +15,7 @@
     "lint": "eslint .",
     "test": "jest",
     "test:cover": "test --coverage",
-    "build": "microbundle --jsx React.createElement --external react,prop-types",
+    "build": "microbundle --name Formin --jsx React.createElement --external react,prop-types --globals react=React,prop-types=PropTypes --no-sourcemap --no-compress",
     "validate": "kcd-scripts validate lint,build,test:cover",
     "docz": "docz dev",
     "docz:build": "docz build",
