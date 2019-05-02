@@ -6,6 +6,7 @@ export default function useFormin({
   defaultValues,
   onChange,
   onSubmit,
+  getError,
 } = {}) {
   const [values, setValues] = useState(defaultValues || {})
   const [errors, setErrors] = useState({})
@@ -79,6 +80,7 @@ export default function useFormin({
       onInvalid: onInputInvalid,
       onChange: onInputChange,
       onBlur: onInputBlur,
+      getError: getInputError,
       ...rest
     } = {}) => {
       const value =
@@ -123,11 +125,20 @@ export default function useFormin({
           setTouched(name, true)
         }),
         onInvalid: wrapEvent(onInputInvalid, ({ target }) => {
-          const { validationMessage, validity } = target
+          let message = target.validationMessage
+
+          if (getError) {
+            message = getError(target.validity)
+          }
+
+          if (getInputError) {
+            message = getInputError(target.validity)
+          }
+
           // Make sure to update errors after the focus event has fired. IE11 will
           // fire the events in a different order.
           setTimeout(() => {
-            setError(name, { validationMessage, validity })
+            setError(name, message)
           })
         }),
         ...rest,
@@ -142,6 +153,7 @@ export default function useFormin({
       setValue,
       setError,
       setTouched,
+      getError,
     ],
   )
 

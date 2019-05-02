@@ -18,14 +18,15 @@ function CustomInput({ onChange = () => {}, ...props }) {
 }
 
 function setup({ renderFn, formProps, ...props } = {}) {
-  function defaultRenderFn({ getFormProps, getInputProps, touched }) {
+  function defaultRenderFn({ getFormProps, getInputProps, touched, errors }) {
     return (
       <form data-testid="form" {...getFormProps(formProps)}>
         <input
           data-testid="input"
           required
-          {...getInputProps({ name: 'text' })}
           data-touched={touched.text}
+          data-error={errors.text}
+          {...getInputProps({ name: 'text' })}
         />
         <input
           type="number"
@@ -151,9 +152,8 @@ test('should set touched on field blur', () => {
 test('should set error on field invalid', () => {
   const { form, input } = setup()
 
-  form.checkValidity()
-
   act(() => {
+    form.checkValidity()
     jest.runAllTimers()
   })
 
@@ -229,6 +229,46 @@ test('should work in StrictMode without warnings', () => {
   )
 
   expect(spy).not.toHaveBeenCalled()
+})
+
+test('should set custom error if provided', () => {
+  const { input, form } = setup({
+    getError: validity => (validity.valueMissing ? 'Required!' : 'Error!'),
+  })
+
+  act(() => {
+    form.checkValidity()
+    jest.runAllTimers()
+  })
+
+  expect(input).toHaveAttribute('data-error', 'Required!')
+})
+
+test('should set custom error if provided in prop getter', () => {
+  const { input, form } = setup({
+    renderFn: ({ getFormProps, getInputProps, errors }) => (
+      <form data-testid="form" {...getFormProps()}>
+        <input
+          data-testid="input"
+          type="text"
+          required
+          data-error={errors.text}
+          {...getInputProps({
+            name: 'text',
+            getError: validity =>
+              validity.valueMissing ? 'Required!' : 'Custom error!',
+          })}
+        />
+      </form>
+    ),
+  })
+
+  act(() => {
+    form.checkValidity()
+    jest.runAllTimers()
+  })
+
+  expect(input).toHaveAttribute('data-error', 'Required!')
 })
 
 test.todo('can handle arrays')
