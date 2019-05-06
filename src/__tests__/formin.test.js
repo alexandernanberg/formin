@@ -244,6 +244,20 @@ test('should set custom error if provided', () => {
   expect(input).toHaveAttribute('data-error', 'Required!')
 })
 
+test('should pass default error message to getError fn', () => {
+  const { input, form } = setup({
+    getError: (validity, message) =>
+      validity.patternMismatch ? 'Match required format!' : message,
+  })
+
+  act(() => {
+    form.checkValidity()
+    jest.runAllTimers()
+  })
+
+  expect(input).toHaveAttribute('data-error', 'Constraints not satisfied')
+})
+
 test('should set custom error if provided in prop getter', () => {
   const { input, form } = setup({
     renderFn: ({ getFormProps, getInputProps, errors }) => (

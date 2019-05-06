@@ -128,11 +128,11 @@ export default function useFormin({
           let message = target.validationMessage
 
           if (getError) {
-            message = getError(target.validity)
+            message = getError(target.validity, message)
           }
 
           if (getInputError) {
-            message = getInputError(target.validity)
+            message = getInputError(target.validity, message)
           }
 
           // Make sure to update errors after the focus event has fired. IE11 will
