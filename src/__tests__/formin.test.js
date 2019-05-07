@@ -67,6 +67,13 @@ function setup({ renderFn, formProps, ...props } = {}) {
 
   return {
     ...utils,
+    rerender: (p = {}) => {
+      utils.rerender(
+        <Formin {...props} {...p}>
+          {childrenSpy}
+        </Formin>,
+      )
+    },
     renderArg,
     childrenSpy,
     form: utils.queryByTestId('form'),
@@ -112,13 +119,17 @@ test('should call onSubmit with stateAndHelpers', () => {
 
 test('can be controlled', () => {
   const onChange = jest.fn()
-  const { input } = setup({ onChange, values: { text: 'Foo' } })
+  const { input, rerender } = setup({ onChange, values: { text: 'Foo' } })
 
   expect(input.value).toEqual('Foo')
 
   fireEvent.change(input, { target: { value: 'Bar' } })
 
   expect(onChange).toHaveBeenCalledWith({ text: 'Bar' })
+
+  rerender({ values: { text: 'Bar' } })
+
+  expect(input.value).toEqual('Bar')
 })
 
 test('can reset', () => {

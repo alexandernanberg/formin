@@ -8,24 +8,29 @@ export default function useFormin({
   onSubmit,
   getError,
 } = {}) {
-  const [values, setValues] = useState(defaultValues || {})
+  const { current: areValuesControlled } = useRef(controlledValues != null)
+  const [stateValues, setValues] = useState(defaultValues || {})
   const [errors, setErrors] = useState({})
   const [touched, setTouchedState] = useState({})
   const [isSubmitting, setSubmitting] = useState(false)
-  const { current: areValuesControlled } = useRef(controlledValues != null)
+
+  const values = areValuesControlled ? controlledValues : stateValues
 
   /* Utils */
 
   const reset = useCallback(() => {
-    setValues({})
     setErrors({})
     setTouchedState({})
     setSubmitting(false)
 
+    if (!areValuesControlled) {
+      setValues({})
+    }
+
     if (onChange) {
       onChange({})
     }
-  }, [onChange])
+  }, [onChange, areValuesControlled])
 
   const setValue = useCallback((name, value) => {
     setValues(prev => ({
@@ -83,8 +88,7 @@ export default function useFormin({
       getError: getInputError,
       ...rest
     } = {}) => {
-      const value =
-        (areValuesControlled ? controlledValues[name] : values[name]) || ''
+      const value = values[name] != null ? values[name] : ''
       const error = errors[name]
 
       return {
@@ -146,7 +150,6 @@ export default function useFormin({
     },
     [
       values,
-      controlledValues,
       areValuesControlled,
       errors,
       onChange,
