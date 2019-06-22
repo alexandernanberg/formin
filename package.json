@@ -59,7 +59,7 @@
   "devDependencies": {
     "docz": "^1.0.0",
     "docz-theme-default": "^1.0.0",
-    "eslint": "^5.4.0",
+    "eslint": "^6.0.0",
     "eslint-config-alexandernanberg": "^1.4.0",
     "husky": "^2.0.0",
     "jest": "^24.0.0",
