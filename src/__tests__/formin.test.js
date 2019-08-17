@@ -1,6 +1,5 @@
 import React, { StrictMode } from 'react'
-import { render, fireEvent, act } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import { render, fireEvent, act } from '@testing-library/react'
 import { Formin } from '..'
 
 jest.useFakeTimers()
@@ -51,7 +50,7 @@ function setup({ renderFn, formProps, ...props } = {}) {
           data-testid="custom"
           {...getInputProps({ name: 'custom' })}
         />
-        <button type="submit" data-testid="button" />
+        <button type="submit">Submit</button>
       </form>
     )
   }
@@ -82,7 +81,7 @@ function setup({ renderFn, formProps, ...props } = {}) {
     checkbox: utils.queryByTestId('checkbox'),
     range: utils.queryByTestId('range'),
     custom: utils.queryByTestId('custom'),
-    button: utils.queryByTestId('button'),
+    button: utils.queryByText('Submit'),
   }
 }
 
