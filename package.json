@@ -19,7 +19,7 @@
     "validate": "kcd-scripts validate lint,build,test:cover",
     "docz": "docz dev",
     "docz:build": "docz build",
-    "docz:serve": "serve .docz/dist"
+    "docz:serve": "docz serve"
   },
   "repository": {
     "type": "git",
@@ -67,7 +67,6 @@
     "prettier": "^1.14.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "semantic-release": "^17.0.0",
-    "serve": "^11.0.0"
+    "semantic-release": "^17.0.0"
   }
 }
