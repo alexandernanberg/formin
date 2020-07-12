@@ -74,8 +74,6 @@ function MyForm() {
 }
 ```
 
-## [Docs](https://formin.netlify.com/)
-
 ## Other solutions
 
 This library is heavily inspired by [Formik](https://github.com/jaredpalmer/formik) but takes a different approach to the problem.

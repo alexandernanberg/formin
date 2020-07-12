@@ -15,11 +15,7 @@
     "lint": "eslint .",
     "test": "jest",
     "test:cover": "test --coverage",
-    "build": "microbundle --name Formin --jsx React.createElement --external react,prop-types --globals react=React,prop-types=PropTypes --no-sourcemap --no-compress",
-    "validate": "kcd-scripts validate lint,build,test:cover",
-    "docz": "docz dev",
-    "docz:build": "docz build",
-    "docz:serve": "docz serve"
+    "build": "microbundle --name Formin --jsx React.createElement --external react,prop-types --globals react=React,prop-types=PropTypes --no-sourcemap --no-compress"
   },
   "repository": {
     "type": "git",
@@ -57,7 +53,6 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.0.0",
     "@testing-library/react": "^10.0.0",
-    "docz": "^2.0.0",
     "eslint": "^7.0.0",
     "eslint-config-alexandernanberg": "^1.11.4",
     "husky": "^4.0.0",
