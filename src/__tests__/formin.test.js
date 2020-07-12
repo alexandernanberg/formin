@@ -57,7 +57,7 @@ function setup({ renderFn, formProps, ...props } = {}) {
 
   let renderArg
   const children = renderFn || defaultRenderFn
-  const childrenSpy = jest.fn(controllerArg => {
+  const childrenSpy = jest.fn((controllerArg) => {
     renderArg = controllerArg
     return children(controllerArg)
   })
@@ -243,7 +243,7 @@ test('should work in StrictMode without warnings', () => {
 
 test('should set custom error if provided', () => {
   const { input, form } = setup({
-    getError: validity => (validity.valueMissing ? 'Required!' : 'Error!'),
+    getError: (validity) => (validity.valueMissing ? 'Required!' : 'Error!'),
   })
 
   act(() => {
@@ -279,7 +279,7 @@ test('should set custom error if provided in prop getter', () => {
           data-error={errors.text}
           {...getInputProps({
             name: 'text',
-            getError: validity =>
+            getError: (validity) =>
               validity.valueMissing ? 'Required!' : 'Custom error!',
           })}
         />

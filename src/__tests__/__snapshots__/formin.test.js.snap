@@ -50,8 +50,9 @@ exports[`should match snapshot 1`] = `
     value=""
   />
   <button
-    data-testid="button"
     type="submit"
-  />
+  >
+    Submit
+  </button>
 </form>
 `;

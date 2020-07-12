@@ -1,6 +1,6 @@
 export function wrapEvent(...fns) {
   return (event, ...args) =>
-    fns.some(fn => {
+    fns.some((fn) => {
       if (fn) {
         fn(event, ...args)
       }

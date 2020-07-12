@@ -33,21 +33,21 @@ export default function useFormin({
   }, [onChange, areValuesControlled])
 
   const setValue = useCallback((name, value) => {
-    setValues(prev => ({
+    setValues((prev) => ({
       ...prev,
       [name]: value,
     }))
   }, [])
 
   const setTouched = useCallback((name, fieldTocuhed) => {
-    setTouchedState(prev => ({
+    setTouchedState((prev) => ({
       ...prev,
       [name]: fieldTocuhed,
     }))
   }, [])
 
   const setError = useCallback((name, error) => {
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
       [name]: error,
     }))
@@ -95,7 +95,7 @@ export default function useFormin({
         name,
         value,
         'aria-invalid': error != null ? !!error : undefined,
-        onChange: wrapEvent(onInputChange, eventOrValue => {
+        onChange: wrapEvent(onInputChange, (eventOrValue) => {
           let inputValue
           if (isInputEvent(eventOrValue)) {
             const { target } = eventOrValue
@@ -163,7 +163,7 @@ export default function useFormin({
   const getFormProps = useCallback(
     ({ onSubmit: onFormSubmit, ...rest } = {}) => {
       return {
-        onSubmit: wrapEvent(onFormSubmit, event => {
+        onSubmit: wrapEvent(onFormSubmit, (event) => {
           event.preventDefault()
           setSubmitting(true)
           onSubmit(stateAndHelpers, event)
